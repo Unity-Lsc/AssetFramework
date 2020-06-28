@@ -24,18 +24,23 @@ public class ResourcesTest : MonoBehaviour
         #endregion
 
         #region 3.AssetBundle
-        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/attack");
-        GameObject obj = Instantiate(assetBundle.LoadAsset<GameObject>("attack"));
+        //AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/attack");
+        //GameObject obj = Instantiate(assetBundle.LoadAsset<GameObject>("attack"));
         #endregion
 
         #region 4.AssetDataBase.LoadAtPath
         //GameObject go = Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GameData/Prefabs/Attack.prefab"));
         #endregion
 
+        //XML
         //SerializeTest();
         //DeSerializeTest();
-        BinarySerTest();
-        BinaryDeSeriaTest();
+
+        //二进制
+        //BinarySerTest();
+        //BinaryDeSeriaTest();
+        
+        //readAssets();
     }
 
     #region XML
@@ -84,7 +89,6 @@ public class ResourcesTest : MonoBehaviour
     }
     #endregion
 
-
     #region 二进制
 
     void BinarySerTest() {
@@ -99,12 +103,12 @@ public class ResourcesTest : MonoBehaviour
     }
 
     void BinaryDeSeriaTest() {
-        TestSerializa test = binaryDeserialize();
-        Debug.Log("Id:" + test.Id);
-        Debug.Log("Name:" + test.Name);
-        foreach (var item in test.List) {
-            Debug.Log("List:" + item);
-        }
+        //TestSerializa test = binaryDeserialize();
+        //Debug.Log("Id:" + test.Id);
+        //Debug.Log("Name:" + test.Name);
+        //foreach (var item in test.List) {
+        //    Debug.Log("List:" + item);
+        //}
     }
 
     /// <summary>
@@ -121,16 +125,27 @@ public class ResourcesTest : MonoBehaviour
     /// 二进制的反序列化
     /// </summary>
     /// <returns></returns>
-    TestSerializa binaryDeserialize() {
-        TextAsset ta = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/test.bytes");
-        MemoryStream ms = new MemoryStream(ta.bytes);
-        BinaryFormatter bf = new BinaryFormatter();
-        TestSerializa test = (TestSerializa)bf.Deserialize(ms);
-        ms.Close();
-        return test;
-    }
+    //TestSerializa binaryDeserialize() {
+    //    TextAsset ta = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/test.bytes");
+    //    MemoryStream ms = new MemoryStream(ta.bytes);
+    //    BinaryFormatter bf = new BinaryFormatter();
+    //    TestSerializa test = (TestSerializa)bf.Deserialize(ms);
+    //    ms.Close();
+    //    return test;
+    //}
 
     #endregion
+
+
+    void readAssets() {
+        //AssetSerialize asset = UnityEditor.AssetDatabase.LoadAssetAtPath<AssetSerialize>("Assets/TestAssets.asset");
+
+        //Debug.Log("Id:" + asset.Id);
+        //Debug.Log("Name:" + asset.Name);
+        //foreach (var item in asset.TestList) {
+        //    Debug.Log("List:" + item);
+        //}
+    }
 
 
 }
