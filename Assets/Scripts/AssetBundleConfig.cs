@@ -38,7 +38,7 @@ public class ABBase {
     public string AssetName { get; set; }
 
     /// <summary>
-    /// 依赖的资源
+    /// 依赖的资源的AB包名集合
     /// </summary>
     [XmlElement("ABDependceList")]
     public List<string> ABDependceList { get; set; }

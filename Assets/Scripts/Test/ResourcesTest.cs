@@ -26,6 +26,7 @@ public class ResourcesTest : MonoBehaviour
         #region 3.AssetBundle
         //AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/attack");
         //GameObject obj = Instantiate(assetBundle.LoadAsset<GameObject>("attack"));
+        //obj.AddComponent<AutoRotation>();
         #endregion
 
         #region 4.AssetDataBase.LoadAtPath
@@ -39,9 +40,38 @@ public class ResourcesTest : MonoBehaviour
         //二进制
         //BinarySerTest();
         //BinaryDeSeriaTest();
-        
+
         //readAssets();
+
+        TestLoadAB();
     }
+
+    #region 加载AB文件
+    void TestLoadAB() {
+        AssetBundle configAB = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/assetbundleconfig");
+        TextAsset ta = configAB.LoadAsset<TextAsset>("AssetBundleConfig");
+        MemoryStream ms = new MemoryStream(ta.bytes);
+        BinaryFormatter bf = new BinaryFormatter();
+        AssetBundleConfig assetBundleConfig = (AssetBundleConfig)bf.Deserialize(ms);
+        ms.Close();
+        string path = "Assets/GameData/Prefabs/Attack.prefab";
+        uint crc = CRC32.GetCRC32(path);
+        ABBase aBBase = null;
+        for (int i = 0; i < assetBundleConfig.ABBaseList.Count; i++) {
+            if(assetBundleConfig.ABBaseList[i].Crc == crc) {
+                aBBase = assetBundleConfig.ABBaseList[i];
+            }
+        }
+        //先加载预制体依赖项
+        for (int i = 0; i < aBBase.ABDependceList.Count; i++) {
+            AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" + aBBase.ABDependceList[i]);
+        }
+        //再加载预制体
+        AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" + aBBase.ABName);
+        GameObject obj = GameObject.Instantiate(assetBundle.LoadAsset<GameObject>(aBBase.ABName));
+    }
+
+    #endregion
 
     #region XML
     void SerializeTest() {
